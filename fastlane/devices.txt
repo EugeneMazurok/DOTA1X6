@@ -1,0 +1,8 @@
+Device ID	Device Name
+dfbeb0476645779a2216cab35c419e7606207cfa	test.webant.se - iPhone SE
+4e14263758ced88f9e0df8d749c6086220fcb087	webant - iPhone 7 plus
+00008030-001C0C391484802E	webant - iPhone 11 pro max
+20c993f421400fc5584fbb420b3d9e86fcf4fd89	webant - iPhone 6 Jake
+a315a8df5d05621db7d84c9c19ad780f106be63e	webant - iPhone X
+e583468b836cb3f4db82c0ff4511b7f37cf3bebc	webant - iPhone 5s
+21bf954b17102ed979b7e27c3c2ba710a9f6e93d	webant - iPhone 6s

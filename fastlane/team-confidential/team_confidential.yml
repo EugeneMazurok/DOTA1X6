@@ -1,0 +1,12 @@
+# Team Constants:
+
+crashlytics_api_token: "574c5b82c3171d021567a01698b94e36d253eb95"
+crashlytics_build_secret: "f535b9b4834727e6c6cda2f97144496d29aa146fd25381484ee9f2230d30f762"
+fabric_login: "mac_mini_office_ci@webant.ru"
+fabric_password: "aG3uxT7K{dgEA(PB"
+fabric_organization_name: "WebAnt"
+appcentral_token: "691052227a402d14c23e97a62538e3fc9eb54363"
+appcentral_organization_name: "WebAnt"
+apple_certificates_git: "ssh://git@gitlab.webant.ru:10022/ltdwebant/ios-codesign.git"
+ci_keychain_name: "CI"
+ci_keychain_password: "supportWebant"

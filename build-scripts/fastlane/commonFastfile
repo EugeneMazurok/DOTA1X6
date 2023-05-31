@@ -1,0 +1,452 @@
+fastlane_require 'yaml'
+fastlane_require 'ostruct'
+
+project_settings = OpenStruct.new(YAML.load(open("#{Dir.pwd}/project_settings.yml")))
+team_confidential = OpenStruct.new(YAML.load(open("#{Dir.pwd}/team-confidential/team_confidential.yml")))
+
+# ---------------------------
+# Start/Stop job lanes.
+# ---------------------------
+
+before_all do |lane|
+  # Check Xcode version
+  xcversion(version: ">= 12.1")
+end
+
+after_all do |lane|
+  # Mac OS X Notification
+  notification(message: " Fastlane finished '#{lane}'") 
+end
+
+#---------------------------
+# Build binary file.
+# Option: isRelease - build configuration.
+#---------------------------
+
+# Common development build
+lane :build do |options|
+
+  skip_archive = options[:skip_archive] == true
+
+  gym(scheme: project_settings[:scheme],
+      export_method: "development",
+      configuration: options[:isRelease] ? "Release" : "Debug",
+      include_bitcode: false,
+      skip_archive: skip_archive,
+      destination: skip_archive ? "generic/platform=iOS Simulator" : nil,
+      clean: true,
+      export_options: {
+	provisioningProfiles: { 
+   	  project_settings[:app_bundle_id] => "match Development #{project_settings[:app_bundle_id]}"
+	},
+          uploadBitcode: false,
+          uploadSymbols: true,
+          compileBitcode: false
+      },
+      xcargs: "OTHERCFLAGS='-DENABLE_CRASH_TRACKING'")
+end
+
+#---------------------------
+# Tests & Pods.
+#---------------------------
+
+lane :test do
+  run_tests(scheme: project_settings[:test_scheme],
+            output_style: "raw")
+end
+
+lane :pods do
+  cocoapods(try_repo_update_on_error: true,
+            use_bundle_exec: false)
+end
+
+#---------------------------
+# Update project version, save version to VCS.
+#---------------------------
+
+lane :update_build_number do |options|
+
+    build_number = generate_build_number()
+
+    increment_build_number_in_xcodeproj(
+      build_number: build_number,
+      target: project_settings[:scheme]
+    )
+
+    update_file_content(
+      "../#{project_settings[:scheme]}/Common.xcconfig",
+      /(CURRENT_PROJECT_VERSION\s*=)\s*.*/ => "\\1 #{build_number}"
+    )
+
+end
+
+lane :update_version_number do |options|
+
+  project_closed_check
+
+  update_build_number
+  isRelease = options[:isRelease] == true
+
+  if isRelease
+    begin
+      app_store_version = get_app_store_version_number(bundle_id: project_settings[:app_bundle_id])
+      current_version = get_version_number_from_xcodeproj(target: project_settings[:scheme]) 
+
+      UI.important 'AppStore: ' + app_store_version + ', Current: ' + current_version
+    rescue
+      UI.error "Cant fetch AppStore version to show you comparison with current one :("
+    end
+  end
+
+  if !options[:isForce] && !UI.confirm("\nDo you want to update version?")
+    UI.important 'Version bump skipped'
+    update_git(isRelease: options[:isRelease] == true)
+    next
+  end
+
+  bumpTypes = ['patch', 'minor', 'major']
+
+  UI.important "\nSelect bump type to increment or insert version in format A.B.C to apply directly:" 
+
+	bumpTypes.each do |value|
+    		UI.message "#{bumpTypes.find_index(value)}. #{value}"
+	end
+
+  bumpType = UI.input("\n")
+  bumpTypeInt = Integer(bumpType, exception: false)
+
+	if !bumpTypeInt.nil? && !bumpTypes[bumpTypeInt].nil?
+		increment_version_number_in_xcodeproj(
+		  bump_type: bumpTypes[bumpTypeInt],
+		  target: project_settings[:scheme]
+		)
+	else
+		increment_version_number_in_xcodeproj(
+		  version_number: bumpType,
+		  target: project_settings[:scheme]
+		)
+	end
+  
+    version = get_version_number_from_xcodeproj(target: project_settings[:scheme]) 
+
+    update_file_content(
+      "../#{project_settings[:scheme]}/Common.xcconfig",
+      /(MARKETING_VERSION\s*=)\s*.*/ => "\\1 #{version}"
+    )
+  
+  update_git(isRelease: isRelease)
+end
+
+lane :update_git do |options|
+  version = get_version_number_from_xcodeproj(target: project_settings[:scheme]) 
+  build_number = get_build_number_from_xcodeproj(target: project_settings[:scheme]) 
+  isRelease = options[:isRelease] == true
+
+  branch = isRelease ? project_settings[:release_branch] : project_settings[:beta_branch]
+
+  # fetch_branch(branch: branch)
+
+  #---------------------------
+  # Commit version bump.
+  #---------------------------
+  if isRelease
+    commit_message = 'Fastlane - Release version: ' + version + ' build: ' + build_number
+  else
+    commit_message = 'Fastlane - Deploy beta version: ' + version + ' build: ' + build_number
+  end
+  git_commit(path: ".", message: commit_message)
+
+  #---------------------------
+  # Add version tag for git.
+  #---------------------------
+  add_git_tag(grouping: "fastlane-builds",
+    	      includes_lane: false,
+              prefix: "v",
+              postfix: "-#{build_number}",
+              build_number: version,
+              message: "")
+  #---------------------------
+  # Push to Git.
+  #---------------------------
+  begin
+      # push_to_git_remote(remote_branch: branch)
+      push_git_tags
+  rescue
+      UI.error "Cant push to brunch '#{branch}' :("
+  end
+end
+
+lane :fetch_branch do |options|
+  branch = options[:branch]
+
+  begin
+    sh "git fetch origin #{branch}:#{branch}"
+
+  rescue
+      UI.error "Cant fetch brunch '#{branch}' :("
+  end
+end
+
+
+#---------------------------
+# Uploading to AppStore Connect.
+#---------------------------
+
+# Release build
+lane :release_common do
+
+  sync_appstore_force_certs_common  
+
+  update_version_number(isRelease: true)
+
+  gym(scheme: project_settings[:scheme],
+      configuration: "Release",
+      export_xcargs: "-allowProvisioningUpdates",
+      xcargs: "OTHERCFLAGS='-DENABLE_CRASH_TRACKING'")
+
+  upload_to_app_store(
+      app_identifier: project_settings[:app_bundle_id],
+      username: project_settings[:apple_user],
+      skip_metadata: true,
+      skip_screenshots: true,
+      force: true,
+      submit_for_review: false)
+end
+
+# Debug build
+lane :beta_testflight_common do
+  update_version_number
+
+  sync_appstore_force_certs_common
+
+  gym(scheme: project_settings[:scheme],
+      configuration: "Debug",
+      export_xcargs: "-allowProvisioningUpdates",
+      xcargs: "OTHERCFLAGS='-DENABLE_CRASH_TRACKING'")
+
+  upload_to_app_store(
+      app_identifier: project_settings[:app_bundle_id],
+      username: project_settings[:apple_user],
+      skip_metadata: true,
+      skip_screenshots: true,
+      force: true,
+      submit_for_review: false)
+end
+
+#---------------------------
+# Uploading to App Center.
+#---------------------------
+
+lane :beta_release_common do
+  beta_upload(group: project_settings[:appcenter_inner_group], isRelease: true)
+end
+
+lane :beta_common do |options|
+  beta_upload(group: project_settings[:appcenter_inner_group], isRelease: false, isCI: options[:isCI])
+end
+
+lane :beta_customers_common do
+  beta_upload(group: project_settings[:appcenter_customer_group], isRelease: false)
+end
+
+lane :beta_upload do |options|
+  desc "Uploading to beta group: " + options[:group]
+
+  sync
+  if !options[:isCI]
+  update_version_number
+  else
+  update_build_number
+  end
+
+  build(isRelease: options[:isRelease])
+
+  release_notes = "Dev \n" + changelog_from_git_commits(commits_count: 30,
+      					   pretty: "- %s",
+      					   date_format: "short",
+     					   merge_commit_filtering: "exclude_merges").gsub("- Fastlane -", "\n\n- Fastlane -")
+
+  appcenter_upload(
+      api_token: team_confidential[:appcentral_token],
+      owner_name: team_confidential[:appcentral_organization_name],
+      app_name: project_settings[:app_name],
+      ipa: "#{project_settings[:scheme]}.ipa",
+      dsym: "#{project_settings[:scheme]}.app.dSYM.zip",
+      release_notes: release_notes,
+      destinations: options[:group],
+      notify_testers: true,
+      mandatory_update: true)
+end
+
+# ---------------------------
+# Upload Crashlytics dSYM's from AppStoreto to App Center.
+# ---------------------------
+
+lane :upload_dsyms do
+  appcenter_upload(
+      api_token: team_confidential[:appcentral_token],
+      owner_name: team_confidential[:appcentral_organization_name],
+      app_name: project_settings[:app_name],
+      dsym: "#{project_settings[:scheme]}.app.dSYM.zip",
+      upload_dsym_only: true)
+end
+
+# ---------------------------
+# Register devices on Developer Portal.
+# ---------------------------
+
+lane :add_devices do |options|
+  register_devices(
+    devices_file: "fastlane/devices.txt",
+    username: project_settings[:apple_user])
+  sync_code_signing(type: "development", force: true)
+end
+
+
+# ---------------------------
+# Update signings info.
+# ---------------------------
+
+# DEVELOPMENT
+
+# Get signing stuff only from Git.
+lane :sync_common do |options|
+  sync_code_signing(type: "development", readonly: true)
+end
+
+# Get signing stuff from Git and update via Developer Portal.
+lane :sync_force_common do |options|
+  sync_code_signing(generate_apple_certs: "false", type: "development", readonly: false)
+end
+
+# Get signing stuff from Git and update via Developer Portal. Create certificates if need.
+lane :sync_force_certs_common do |options|
+  sync_code_signing(generate_apple_certs: "true", type: "development", readonly: false)
+end
+
+# APPSTORE
+
+# Get signing stuff only from Git.
+lane :sync_appstore_common do |options|
+  sync_code_signing(type: "appstore", readonly: true)
+end
+
+# Get signing stuff from Git and update via Developer Portal.
+lane :sync_appstore_force_common do |options|
+  sync_code_signing(generate_apple_certs: "false", type: "appstore", readonly: false)
+end
+
+# Get signing stuff from Git and update via Developer Portal. Create certificates if need.
+lane :sync_appstore_force_certs_common do |options|
+  sync_code_signing(generate_apple_certs: "true", type: "appstore", readonly: false)
+end
+
+# ---------------------------
+# Asking developer to close current project in Xcode.
+# ---------------------------
+
+lane :project_closed_check do
+  if !UI.confirm("\nOpened xcode project may cause errors.\nIs '#{project_settings[:scheme]}' project closed?")
+    project_closed_check
+  end
+end
+
+# ---------------------------
+# CI & CD.
+# ---------------------------
+
+# Building on CI stage
+lane :ci_build_common do |options|
+
+   isRelease = options[:isRelease] ? "Release" : "Debug"
+   keychain_name = team_confidential[:ci_keychain_name]
+   keychain_password = team_confidential[:ci_keychain_password]
+
+   create_keychain(name: keychain_name,
+     		  password: keychain_password,
+   		  default_keychain: true,
+     		  unlock: true,
+     		  timeout: 0,
+     		  lock_when_sleeps: false)
+
+  unlock_keychain(path: keychain_name,
+    		 password: keychain_password,
+   		 set_default: true)
+
+  match(type: "development", 
+        readonly: true,
+	keychain_name: keychain_name,
+	keychain_password: keychain_password)
+
+  begin
+    match(type: "appstore", 
+          readonly: true,
+	  keychain_name: keychain_name,
+	  keychain_password: keychain_password)
+  rescue
+    UI.important "Can't fetch appstore signing stuff."
+  end
+
+
+  build(isRelease: isRelease, skip_archive: true)
+
+end
+
+# ---------------------------
+# Tests.
+# ---------------------------
+
+# Base tests lane
+lane :tests_common do |options|
+  ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "120"
+    
+  # Because fastlane failing to start any of simulators by itself if the main process was killed
+  sh "../build-scripts/utilities/launch_ios_simulator.sh '#{options[:simulators].first()}'"
+  
+  begin
+    scan(devices: options[:simulators],
+         scheme: options[:scheme],
+         reset_simulator: true,
+         prelaunch_simulator: true,
+         result_bundle: true,
+         fail_build: false)
+  rescue
+    UI.error "Some tests were failed :("
+  end
+       
+  xchtmlreport(enable_junit: true)
+end
+
+# UI-tests
+lane :ui_tests_common do
+  simulators = ["iPhone 13 mini", "iPhone 13 Pro Max"]
+
+  tests_common(scheme: project_settings[:ui_test_scheme],
+	      simulators: simulators)
+end
+
+# Unit-tests
+lane :unit_tests_common do
+  simulators = ["iPhone 13 mini"]
+
+  tests_common(scheme: project_settings[:unit_test_scheme],
+	      simulators: simulators)
+end
+
+# ---------------------------
+# Versioning helpers.
+# ---------------------------
+
+def update_file_content(file, replacements)
+  content = File.read(file)
+  replacements.each do |pattern, replacement|
+    content.gsub!(pattern, replacement)
+  end
+  File.write(file, content)
+end
+
+# Generates a new build number based on timestamp
+def generate_build_number()
+  require 'date'
+  return DateTime.now.strftime("%Y%m%d%H%M%S")
+end

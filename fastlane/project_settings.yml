@@ -1,0 +1,29 @@
+# Project Constants:
+
+app_bundle_id: "com.webant.baseapp"
+
+# Какая схема приложения будет использоваться для создания Beta и Release сборок приложения.
+scheme: "BaseApp"
+
+# Имя приложения в appcenter
+app_name: "BaseApp-iOS"
+
+# AppleId под которым разрабатывается приложение. Необходимо для управления подписями и сертификатами.
+apple_user: "vdaron@gmail.com"
+
+# Если один AppleID аккаунт состоит в нескольких командах, то необходимо указать id команды в котором идет разработка.
+team_id: "Z4Q83QXW57"
+
+# Для управления сертификатами разработчика. Если приложение использует AppleId аккаунт заказчика,
+# то ветка должна называться согласно названию приложению. Если приложение публикуется под нашим аккаунтом,
+# тогда значение должно быть "vdaron@gmail.com"
+certificates_git_branch: "vdaron@gmail.com"
+
+# В какую ветку будет залита версия после команды fastlane beta
+beta_branch: "beta"
+
+# В какую команду тестирования будут отправляться сборки для внутреннего тестирования.
+appcenter_inner_group: "Collaborators"
+
+# Путь к файлу настройки проекта.
+plist_path: "BaseGalleryProject/SupportingFiles/Info.plist"
