@@ -9,10 +9,10 @@ import RxNetworkApiClient
 /// Добавляет к каждому запросу заголовок авторизации, если есть токен авторизации.
 class AuthInterceptor: Interceptor {
 
-    private let token: String?
+    private let settings: Settings
 
-    init(_ token: String?) {
-        self.token = token
+    init(_ settings: Settings) {
+        self.settings = settings
     }
     
     func prepare<T: Codable>(request: ApiRequest<T>) {
@@ -20,8 +20,8 @@ class AuthInterceptor: Interceptor {
         if !(request.path?.contains("oauth") ?? false) {
             let authHeaderKey = "Authorization"
             let index = request.headers?.firstIndex(where: { $0.key == authHeaderKey })
-            if let auth = token {
-                let authHeader = Header(authHeaderKey, "Bearer \(auth)")
+            if let auth = settings.token {
+                let authHeader = Header(authHeaderKey, "Bearer \(auth.accessToken)")
                 if let index = index {
                     request.headers?[index] = authHeader
                 } else {

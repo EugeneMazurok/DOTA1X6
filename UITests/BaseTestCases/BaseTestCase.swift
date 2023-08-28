@@ -56,6 +56,7 @@ class BaseTestCase: XCTestCase {
     }
     
     func dismissKeyboardIfPresent() {
+        // TODO: - Localize iPad button
         guard app.keyboards.element(boundBy: 0).exists else {
             return
         }

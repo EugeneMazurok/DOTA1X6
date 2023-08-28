@@ -63,3 +63,4 @@ targets:
 
     sources:
     - path: .
+    - path: ../BaseGalleryProject/Src/Resources/Strings

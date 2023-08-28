@@ -6,7 +6,6 @@ open class ErrorResponseHandler: ResponseHandler {
     
     private let jsonDecoder = JSONDecoder()
 
-    // swiftlint:disable all
     public func handle<T: Codable>(observer: @escaping SingleObserver<T>,
                                    request: ApiRequest<T>,
                                    response: NetworkResponse) -> Bool {
@@ -38,7 +37,7 @@ open class ErrorResponseHandler: ResponseHandler {
                 // When performing a resumable upload, handle 404 Not Found errors
                 //  by starting the entire upload over from the beginning.
                                 
-                errorEntity.errors.append("not FOUND custom error")
+                errorEntity.errors.append(R.string.responseHandlers.notFound())
                 observer(.error(errorEntity))
                 return true
 
@@ -79,5 +78,4 @@ open class ErrorResponseHandler: ResponseHandler {
         }
         return false
     }
-    // swiftlint:enable all
 }

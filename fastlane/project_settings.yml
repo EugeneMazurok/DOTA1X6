@@ -5,6 +5,12 @@ app_bundle_id: "com.webant.baseapp"
 # Какая схема приложения будет использоваться для создания Beta и Release сборок приложения.
 scheme: "BaseApp"
 
+# Схема для запуска UI-тестов в проекте.
+ui_test_scheme: "UITests"
+
+# Схема для запуска Unit-тестов в проекте.
+unit_test_scheme: "UnitTests"
+
 # Имя приложения в appcenter
 app_name: "BaseApp-iOS"
 
@@ -22,8 +28,14 @@ certificates_git_branch: "vdaron@gmail.com"
 # В какую ветку будет залита версия после команды fastlane beta
 beta_branch: "beta"
 
+# В какую ветку будет залита версия после команды fastlane release
+release_branch: "appstore"
+
 # В какую команду тестирования будут отправляться сборки для внутреннего тестирования.
 appcenter_inner_group: "Collaborators"
+
+# В какую команду тестирования будут отправляться сборки для тестирования заказчиком.
+appcenter_customer_group: "BaseApp-public"
 
 # Путь к файлу настройки проекта.
 plist_path: "BaseGalleryProject/SupportingFiles/Info.plist"

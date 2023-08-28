@@ -54,21 +54,186 @@ struct _R {
     let developmentRegion = "en"
   }
 
-  /// This `_R.string` struct is generated, and contains static references to 1 localization tables.
+  /// This `_R.string` struct is generated, and contains static references to 6 localization tables.
   struct string {
     let bundle: Foundation.Bundle
     let preferredLanguages: [String]?
     let locale: Locale?
+    var baseStrings: baseStrings { .init(source: .init(bundle: bundle, tableName: "BaseStrings", preferredLanguages: preferredLanguages, locale: locale)) }
+    var errorEntities: errorEntities { .init(source: .init(bundle: bundle, tableName: "ErrorEntities", preferredLanguages: preferredLanguages, locale: locale)) }
     var launchScreen: launchScreen { .init(source: .init(bundle: bundle, tableName: "LaunchScreen", preferredLanguages: preferredLanguages, locale: locale)) }
+    var responseHandlers: responseHandlers { .init(source: .init(bundle: bundle, tableName: "ResponseHandlers", preferredLanguages: preferredLanguages, locale: locale)) }
+    var scenes: scenes { .init(source: .init(bundle: bundle, tableName: "Scenes", preferredLanguages: preferredLanguages, locale: locale)) }
+    var useCases: useCases { .init(source: .init(bundle: bundle, tableName: "UseCases", preferredLanguages: preferredLanguages, locale: locale)) }
 
+    func baseStrings(preferredLanguages: [String]) -> baseStrings {
+      .init(source: .init(bundle: bundle, tableName: "BaseStrings", preferredLanguages: preferredLanguages, locale: locale))
+    }
+    func errorEntities(preferredLanguages: [String]) -> errorEntities {
+      .init(source: .init(bundle: bundle, tableName: "ErrorEntities", preferredLanguages: preferredLanguages, locale: locale))
+    }
     func launchScreen(preferredLanguages: [String]) -> launchScreen {
       .init(source: .init(bundle: bundle, tableName: "LaunchScreen", preferredLanguages: preferredLanguages, locale: locale))
     }
+    func responseHandlers(preferredLanguages: [String]) -> responseHandlers {
+      .init(source: .init(bundle: bundle, tableName: "ResponseHandlers", preferredLanguages: preferredLanguages, locale: locale))
+    }
+    func scenes(preferredLanguages: [String]) -> scenes {
+      .init(source: .init(bundle: bundle, tableName: "Scenes", preferredLanguages: preferredLanguages, locale: locale))
+    }
+    func useCases(preferredLanguages: [String]) -> useCases {
+      .init(source: .init(bundle: bundle, tableName: "UseCases", preferredLanguages: preferredLanguages, locale: locale))
+    }
 
+
+    /// This `_R.string.baseStrings` struct is generated, and contains static references to 6 localization keys.
+    struct baseStrings {
+      let source: RswiftResources.StringResource.Source
+
+      /// Value: Внимание
+      ///
+      /// Key: attention
+      var attention: RswiftResources.StringResource { .init(key: "attention", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Отмена
+      ///
+      /// Key: cancel
+      var cancel: RswiftResources.StringResource { .init(key: "cancel", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Продолжить
+      ///
+      /// Key: continue
+      var `continue`: RswiftResources.StringResource { .init(key: "continue", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Ошибка
+      ///
+      /// Key: error
+      var error: RswiftResources.StringResource { .init(key: "error", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Ок
+      ///
+      /// Key: ok
+      var ok: RswiftResources.StringResource { .init(key: "ok", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Хорошо
+      ///
+      /// Key: okay
+      var okay: RswiftResources.StringResource { .init(key: "okay", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+    }
+
+    /// This `_R.string.errorEntities` struct is generated, and contains static references to 12 localization keys.
+    struct errorEntities {
+      let source: RswiftResources.StringResource.Source
+
+      /// Value: Дата уже прошла
+      ///
+      /// Key: dateAlreadyPast
+      var dateAlreadyPast: RswiftResources.StringResource { .init(key: "dateAlreadyPast", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Дата еще не наступила
+      ///
+      /// Key: dateStillToCome
+      var dateStillToCome: RswiftResources.StringResource { .init(key: "dateStillToCome", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Номер совпадает с текущим
+      ///
+      /// Key: equalPhoneNumber
+      var equalPhoneNumber: RswiftResources.StringResource { .init(key: "equalPhoneNumber", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: '%@' не может быть пустым
+      ///
+      /// Key: fieldIsEmpty
+      var fieldIsEmpty: RswiftResources.StringResource1<String> { .init(key: "fieldIsEmpty", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: '%@' должно содержать %@ символов
+      ///
+      /// Key: fieldIsNoEqual
+      var fieldIsNoEqual: RswiftResources.StringResource2<String, String> { .init(key: "fieldIsNoEqual", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: '%@' не может быть более %@ символов
+      ///
+      /// Key: fieldIsTooLong
+      var fieldIsTooLong: RswiftResources.StringResource2<String, String> { .init(key: "fieldIsTooLong", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: '%@' не может быть менее %@ символов
+      ///
+      /// Key: fieldIsTooShort
+      var fieldIsTooShort: RswiftResources.StringResource2<String, String> { .init(key: "fieldIsTooShort", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: '%@' может содержать только латинские буквы, цифры, знак подчёркивания, точку и минус
+      ///
+      /// Key: forbiddenSymbolsForEmailOrUsername
+      var forbiddenSymbolsForEmailOrUsername: RswiftResources.StringResource1<String> { .init(key: "forbiddenSymbolsForEmailOrUsername", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: '%@' может содержать только латинские буквы, цифры, знаки препинания
+      ///
+      /// Key: forbiddenSymbolsForPassword
+      var forbiddenSymbolsForPassword: RswiftResources.StringResource1<String> { .init(key: "forbiddenSymbolsForPassword", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: '%@' может содержать только буквы, пробел, дефис
+      ///
+      /// Key: forbiddenSymbolsForText
+      var forbiddenSymbolsForText: RswiftResources.StringResource1<String> { .init(key: "forbiddenSymbolsForText", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Неверный формат
+      ///
+      /// Key: incorrect
+      var incorrect: RswiftResources.StringResource { .init(key: "incorrect", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Пароли не совпадают
+      ///
+      /// Key: passwordsAreDifferent
+      var passwordsAreDifferent: RswiftResources.StringResource { .init(key: "passwordsAreDifferent", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+    }
 
     /// This `_R.string.launchScreen` struct is generated, and contains static references to 0 localization keys.
     struct launchScreen {
       let source: RswiftResources.StringResource.Source
+    }
+
+    /// This `_R.string.responseHandlers` struct is generated, and contains static references to 1 localization keys.
+    struct responseHandlers {
+      let source: RswiftResources.StringResource.Source
+
+      /// Value: 404 не найдено  
+      ///
+      /// Key: NotFound
+      var notFound: RswiftResources.StringResource { .init(key: "NotFound", tableName: "ResponseHandlers", source: source, developmentValue: nil, comment: nil) }
+    }
+
+    /// This `_R.string.scenes` struct is generated, and contains static references to 4 localization keys.
+    struct scenes {
+      let source: RswiftResources.StringResource.Source
+
+      /// Value: Продолжить
+      ///
+      /// Key: continue
+      var `continue`: RswiftResources.StringResource { .init(key: "continue", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Ошибка
+      ///
+      /// Key: error
+      var error: RswiftResources.StringResource { .init(key: "error", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Профиль
+      ///
+      /// Key: profile
+      var profile: RswiftResources.StringResource { .init(key: "profile", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+
+      /// Value: Настройки
+      ///
+      /// Key: settings
+      var settings: RswiftResources.StringResource { .init(key: "settings", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+    }
+
+    /// This `_R.string.useCases` struct is generated, and contains static references to 1 localization keys.
+    struct useCases {
+      let source: RswiftResources.StringResource.Source
+
+      /// Value: Перейти в настройки чтобы изменить разрешения для  %@
+      ///
+      /// Key: ProceedToSettingsToChangePermissionFor
+      var proceedToSettingsToChangePermissionFor: RswiftResources.StringResource1<String> { .init(key: "ProceedToSettingsToChangePermissionFor", tableName: "UseCases", source: source, developmentValue: nil, comment: nil) }
     }
   }
 

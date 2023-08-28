@@ -29,8 +29,7 @@ class ExtraPathInterceptor: Interceptor {
             request.path?.contains("uploads") ?? false &&
             request.path?.contains("/api") ?? false &&
             request.path?.contains("/lookup") ?? false {
-//            TODO: настроить путь
-//            request.path = Config.extraPath + (request.path ?? "")
+            request.path = Config.extraPath + (request.path ?? "")
         }
     }
 

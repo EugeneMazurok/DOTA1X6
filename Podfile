@@ -12,6 +12,8 @@ target 'BaseGalleryProject' do
   pod 'RxNetworkApiClient', :inhibit_warnings => true
   pod 'RxSwift', '~> 5.0.1' # обусловлено требованиями апиклиента
   pod 'SwiftyJSON', :inhibit_warnings => true
+  pod 'DITranquillity', :inhibit_warnings => true
+  pod 'R.swift', :inhibit_warnings => true
   pod "DBDebugToolkit", :inhibit_warnings => true
 
   post_install do |installer|
@@ -36,12 +38,14 @@ target 'BaseGalleryProject' do
 
   target 'UnitTests' do
     inherit! :complete
+    pod 'R.swift'
     pod 'RxBlocking'
     pod 'RxTest'
   end
 
   target 'UITests' do
     inherit! :complete
+    pod 'R.swift'
     pod 'RxBlocking'
     pod 'RxTest'
   end
