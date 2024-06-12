@@ -38,4 +38,4 @@ appcenter_inner_group: "Collaborators"
 appcenter_customer_group: "BaseApp-public"
 
 # Путь к файлу настройки проекта.
-plist_path: "BaseGalleryProject/SupportingFiles/Info.plist"
+plist_path: "dota1x6/SupportingFiles/Info.plist"

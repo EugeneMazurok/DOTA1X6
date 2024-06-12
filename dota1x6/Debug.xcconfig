@@ -3,7 +3,7 @@
 
 #include "Config/AppIdentifiers.xcconfig"
 #include "Common.xcconfig"
-#include "Pods/Target Support Files/Pods-BaseGalleryProject/Pods-BaseGalleryProject.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-dota1x6/Pods-dota1x6.debug.xcconfig"
 
 PRODUCT_BUNDLE_IDENTIFIER = $(BASE_BUNDLE_IDENTIFIER_DEV)
 

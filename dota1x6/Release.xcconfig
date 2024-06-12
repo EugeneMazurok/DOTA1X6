@@ -1,7 +1,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-#include "Pods/Target Support Files/Pods-BaseGalleryProject/Pods-BaseGalleryProject.release.xcconfig"
+#include "Pods/Target Support Files/Pods-dota1x6/Pods-dota1x6.release.xcconfig"
 #include "Common.xcconfig"
 #include "Config/AppIdentifiers.xcconfig"
 

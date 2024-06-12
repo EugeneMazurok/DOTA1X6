@@ -1,7 +1,7 @@
 .NOTPARALLEL, .SILENT:
 
 # Project constants
-global_project_name = BaseGalleryProject
+global_project_name = dota1x6
 global_project_bundle_id = com.webant.baseapp
 
 old_bundle_id = $(global_project_bundle_id)

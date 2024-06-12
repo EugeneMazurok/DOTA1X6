@@ -2,4 +2,4 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 #include "App-Common.xcconfig"
-#include "Target Support Files/Pods-BaseGalleryProject/Pods-BaseGalleryProject.debug.xcconfig"
+#include "Target Support Files/Pods-dota1x6/Pods-dota1x6.release.xcconfig"

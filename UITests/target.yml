@@ -31,7 +31,7 @@ targets:
     platform: iOS
 
     dependencies:
-    - target: BaseGalleryProject
+    - target: dota1x6
 
     configFiles:
       Debug: Debug.xcconfig
@@ -63,4 +63,4 @@ targets:
 
     sources:
     - path: .
-    - path: ../BaseGalleryProject/Src/Resources/Strings
+    - path: ../dota1x6/Src/Resources/Strings

@@ -1,14 +1,14 @@
-name: BaseGalleryProject
+name: dota1x6
 
 schemes:
-  BaseGalleryProject:
+  dota1x6:
     analyze:
       config: Debug
     archive:
       config: Release
     build:
       targets:
-        BaseGalleryProject:
+        dota1x6:
         - running
         - profiling
         - analyzing
@@ -21,7 +21,7 @@ schemes:
       commandLineArguments:
         "IS_NETWORK_LOGGING_ENABLED": true
 targets:
-  BaseGalleryProject:
+  dota1x6:
     type: application
     platform: iOS
 
@@ -47,9 +47,9 @@ targets:
       runOnlyWhenInstalling: false
       shell: /bin/sh
       script: |
-            "$PODS_ROOT/R.swift/rswift" generate "$SRCROOT/BaseGalleryProject/R.generated.swift"
+            "$PODS_ROOT/R.swift/rswift" generate "$SRCROOT/dota1x6/R.generated.swift"
       outputFiles:
-      - $SRCROOT/BaseGalleryProject/R.generated.swift
+      - $SRCROOT/dota1x6/R.generated.swift
 
     sources:
     - path: ../Config

@@ -4,11 +4,11 @@
   swift_version = "5.0"
   platform :ios, '12.0'
 
-target 'BaseGalleryProject' do
+target 'dota1x6' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for BaseGalleryProject
+  # Pods for dota1x6
   pod 'RxNetworkApiClient', :inhibit_warnings => true
   pod 'RxSwift', '~> 5.0.1' # обусловлено требованиями апиклиента
   pod 'SwiftyJSON', :inhibit_warnings => true

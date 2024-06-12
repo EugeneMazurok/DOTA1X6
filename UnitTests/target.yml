@@ -31,7 +31,7 @@ targets:
     platform: iOS
 
     dependencies:
-    - target: BaseGalleryProject
+    - target: dota1x6
 
     configFiles:
       Debug: Debug.xcconfig
@@ -45,7 +45,7 @@ targets:
         LD_RUNPATH_SEARCH_PATHS: $(inherited) @executable_path/Frameworks @loader_path/Frameworks
         PRODUCT_BUNDLE_IDENTIFIER: UnitTests
         PRODUCT_NAME: UnitTests
-        TEST_HOST: $(BUILT_PRODUCTS_DIR)/BaseGalleryProject.app/BaseGalleryProject
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/dota1x6.app/dota1x6
       configs:
         Debug:
         Release:

@@ -1,10 +1,10 @@
 // MARK: - App identity
-BUNDLE_DISPLAY_NAME = BaseGalleryProject
+BUNDLE_DISPLAY_NAME = dota1x6
 
 // < DON'T TOUCH IT! >
 BASE_BUNDLE_IDENTIFIER = com.webant.baseapp
 BASE_BUNDLE_IDENTIFIER_DEV = com.webant.baseapp
-APPLICATION_SCHEME = basegalleryproject
+APPLICATION_SCHEME = dota1x6
 // < /DON'T TOUCH IT! >
 
 // MARK: - Team
