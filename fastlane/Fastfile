@@ -65,17 +65,3 @@ end
 lane :ci_release_build do |options|
   ci_build_common(isRelease: true)
 end
-
-# ---------------------------
-# Tests.
-# ---------------------------
-
-# UI-tests
-lane :ui_tests do
-  ui_tests_common
-end
-
-# Unit-tests
-lane :unit_tests do
-  unit_tests_common
-end

@@ -417,22 +417,6 @@ lane :tests_common do |options|
   xchtmlreport(enable_junit: true)
 end
 
-# UI-tests
-lane :ui_tests_common do
-  simulators = ["iPhone 13 mini", "iPhone 13 Pro Max"]
-
-  tests_common(scheme: project_settings[:ui_test_scheme],
-	      simulators: simulators)
-end
-
-# Unit-tests
-lane :unit_tests_common do
-  simulators = ["iPhone 13 mini"]
-
-  tests_common(scheme: project_settings[:unit_test_scheme],
-	      simulators: simulators)
-end
-
 # ---------------------------
 # Versioning helpers.
 # ---------------------------

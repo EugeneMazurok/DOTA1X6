@@ -15,15 +15,12 @@ new_name_lower = $(shell echo $(new_name) | tr '[:upper:]' '[:lower:]')
 
 is_ci = false
 
-team_confidencial_path = fastlane/team-confidential/team_confidential.yml
-
 project:
 	git submodule init
 	git submodule update
 	git submodule foreach 'git reset --hard && git checkout master && git pull --ff-only'
 	xcodegen
 	pod install --repo-update
-	test -f $(team_confidencial_path) && if [ $(is_ci) == false ]; then fastlane sync; fi && echo "\033[0;32m$$SUCCESS_BANNER" && exit 0 || echo "\033[0;31m$$ERROR_BANNER" && exit 1
 	if [ $(is_ci) == false ]; then open $(global_project_name).xcworkspace; fi
 
 configs:

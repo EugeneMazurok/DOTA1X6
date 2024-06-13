@@ -5,7 +5,6 @@
 
 import Foundation
 import RswiftResources
-import UIKit
 
 private class BundleFinder {}
 let R = _R(bundle: Bundle(for: BundleFinder.self))
@@ -20,7 +19,6 @@ struct _R {
   var image: image { .init(bundle: bundle) }
   var info: info { .init(bundle: bundle) }
   var file: file { .init(bundle: bundle) }
-  var storyboard: storyboard { .init(bundle: bundle) }
 
   func string(bundle: Foundation.Bundle) -> string {
     .init(bundle: bundle, preferredLanguages: nil, locale: nil)
@@ -43,25 +41,21 @@ struct _R {
   func file(bundle: Foundation.Bundle) -> file {
     .init(bundle: bundle)
   }
-  func storyboard(bundle: Foundation.Bundle) -> storyboard {
-    .init(bundle: bundle)
-  }
   func validate() throws {
-    try self.storyboard.validate()
+
   }
 
   struct project {
     let developmentRegion = "en"
   }
 
-  /// This `_R.string` struct is generated, and contains static references to 6 localization tables.
+  /// This `_R.string` struct is generated, and contains static references to 5 localization tables.
   struct string {
     let bundle: Foundation.Bundle
     let preferredLanguages: [String]?
     let locale: Locale?
     var baseStrings: baseStrings { .init(source: .init(bundle: bundle, tableName: "BaseStrings", preferredLanguages: preferredLanguages, locale: locale)) }
     var errorEntities: errorEntities { .init(source: .init(bundle: bundle, tableName: "ErrorEntities", preferredLanguages: preferredLanguages, locale: locale)) }
-    var launchScreen: launchScreen { .init(source: .init(bundle: bundle, tableName: "LaunchScreen", preferredLanguages: preferredLanguages, locale: locale)) }
     var responseHandlers: responseHandlers { .init(source: .init(bundle: bundle, tableName: "ResponseHandlers", preferredLanguages: preferredLanguages, locale: locale)) }
     var scenes: scenes { .init(source: .init(bundle: bundle, tableName: "Scenes", preferredLanguages: preferredLanguages, locale: locale)) }
     var useCases: useCases { .init(source: .init(bundle: bundle, tableName: "UseCases", preferredLanguages: preferredLanguages, locale: locale)) }
@@ -71,9 +65,6 @@ struct _R {
     }
     func errorEntities(preferredLanguages: [String]) -> errorEntities {
       .init(source: .init(bundle: bundle, tableName: "ErrorEntities", preferredLanguages: preferredLanguages, locale: locale))
-    }
-    func launchScreen(preferredLanguages: [String]) -> launchScreen {
-      .init(source: .init(bundle: bundle, tableName: "LaunchScreen", preferredLanguages: preferredLanguages, locale: locale))
     }
     func responseHandlers(preferredLanguages: [String]) -> responseHandlers {
       .init(source: .init(bundle: bundle, tableName: "ResponseHandlers", preferredLanguages: preferredLanguages, locale: locale))
@@ -184,11 +175,6 @@ struct _R {
       ///
       /// Key: passwordsAreDifferent
       var passwordsAreDifferent: RswiftResources.StringResource { .init(key: "passwordsAreDifferent", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
-    }
-
-    /// This `_R.string.launchScreen` struct is generated, and contains static references to 0 localization keys.
-    struct launchScreen {
-      let source: RswiftResources.StringResource.Source
     }
 
     /// This `_R.string.responseHandlers` struct is generated, and contains static references to 1 localization keys.
@@ -313,7 +299,6 @@ struct _R {
             let bundle: Foundation.Bundle
             var uiSceneConfigurationName: String { bundle.infoDictionaryString(path: ["UIApplicationSceneManifest", "UISceneConfigurations", "UIWindowSceneSessionRoleApplication"], key: "UISceneConfigurationName") ?? "Default Configuration" }
             var uiSceneDelegateClassName: String { bundle.infoDictionaryString(path: ["UIApplicationSceneManifest", "UISceneConfigurations", "UIWindowSceneSessionRoleApplication"], key: "UISceneDelegateClassName") ?? "$(PRODUCT_MODULE_NAME).SceneDelegate" }
-            var uiSceneStoryboardFile: String { bundle.infoDictionaryString(path: ["UIApplicationSceneManifest", "UISceneConfigurations", "UIWindowSceneSessionRoleApplication"], key: "UISceneStoryboardFile") ?? "LaunchScreen" }
           }
         }
       }
@@ -331,31 +316,5 @@ struct _R {
 
     /// Resource file `target.yml`.
     var targetYml: RswiftResources.FileResource { .init(name: "target", pathExtension: "yml", bundle: bundle, locale: LocaleReference.none) }
-  }
-
-  /// This `_R.storyboard` struct is generated, and contains static references to 1 storyboards.
-  struct storyboard {
-    let bundle: Foundation.Bundle
-    var launchScreen: launchScreen { .init(bundle: bundle) }
-
-    func launchScreen(bundle: Foundation.Bundle) -> launchScreen {
-      .init(bundle: bundle)
-    }
-    func validate() throws {
-      try self.launchScreen.validate()
-    }
-
-
-    /// Storyboard `LaunchScreen`.
-    struct launchScreen: RswiftResources.StoryboardReference, RswiftResources.InitialControllerContainer {
-      typealias InitialController = UIKit.UIViewController
-
-      let bundle: Foundation.Bundle
-
-      let name = "LaunchScreen"
-      func validate() throws {
-
-      }
-    }
   }
 }

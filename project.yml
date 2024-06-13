@@ -1,6 +1,4 @@
 name: dota1x6
-attributes:
-  ORGANIZATIONNAME: webant.com
 
 configs:
   Debug: debug
@@ -23,5 +21,3 @@ options:
 
 include:
   - path: dota1x6/target.yml
-  - path: UnitTests/target.yml
-  - path: UITests/target.yml
