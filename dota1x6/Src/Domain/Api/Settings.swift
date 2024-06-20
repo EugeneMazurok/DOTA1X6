@@ -1,6 +1,5 @@
 import Foundation
 
-// загрушка для инициализации АпиКлиента, за инфой к лиду =)
 class Settings {
     
     var token: Token?

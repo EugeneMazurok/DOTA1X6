@@ -54,176 +54,350 @@ struct _R {
     let bundle: Foundation.Bundle
     let preferredLanguages: [String]?
     let locale: Locale?
-    var baseStrings: baseStrings { .init(source: .init(bundle: bundle, tableName: "BaseStrings", preferredLanguages: preferredLanguages, locale: locale)) }
-    var errorEntities: errorEntities { .init(source: .init(bundle: bundle, tableName: "ErrorEntities", preferredLanguages: preferredLanguages, locale: locale)) }
-    var responseHandlers: responseHandlers { .init(source: .init(bundle: bundle, tableName: "ResponseHandlers", preferredLanguages: preferredLanguages, locale: locale)) }
-    var scenes: scenes { .init(source: .init(bundle: bundle, tableName: "Scenes", preferredLanguages: preferredLanguages, locale: locale)) }
-    var useCases: useCases { .init(source: .init(bundle: bundle, tableName: "UseCases", preferredLanguages: preferredLanguages, locale: locale)) }
+    var base: base { .init(source: .init(bundle: bundle, tableName: "base", preferredLanguages: preferredLanguages, locale: locale)) }
+    var button: button { .init(source: .init(bundle: bundle, tableName: "button", preferredLanguages: preferredLanguages, locale: locale)) }
+    var dotaPlus: dotaPlus { .init(source: .init(bundle: bundle, tableName: "dotaPlus", preferredLanguages: preferredLanguages, locale: locale)) }
+    var scenes: scenes { .init(source: .init(bundle: bundle, tableName: "scenes", preferredLanguages: preferredLanguages, locale: locale)) }
+    var section: section { .init(source: .init(bundle: bundle, tableName: "section", preferredLanguages: preferredLanguages, locale: locale)) }
 
-    func baseStrings(preferredLanguages: [String]) -> baseStrings {
-      .init(source: .init(bundle: bundle, tableName: "BaseStrings", preferredLanguages: preferredLanguages, locale: locale))
+    func base(preferredLanguages: [String]) -> base {
+      .init(source: .init(bundle: bundle, tableName: "base", preferredLanguages: preferredLanguages, locale: locale))
     }
-    func errorEntities(preferredLanguages: [String]) -> errorEntities {
-      .init(source: .init(bundle: bundle, tableName: "ErrorEntities", preferredLanguages: preferredLanguages, locale: locale))
+    func button(preferredLanguages: [String]) -> button {
+      .init(source: .init(bundle: bundle, tableName: "button", preferredLanguages: preferredLanguages, locale: locale))
     }
-    func responseHandlers(preferredLanguages: [String]) -> responseHandlers {
-      .init(source: .init(bundle: bundle, tableName: "ResponseHandlers", preferredLanguages: preferredLanguages, locale: locale))
+    func dotaPlus(preferredLanguages: [String]) -> dotaPlus {
+      .init(source: .init(bundle: bundle, tableName: "dotaPlus", preferredLanguages: preferredLanguages, locale: locale))
     }
     func scenes(preferredLanguages: [String]) -> scenes {
-      .init(source: .init(bundle: bundle, tableName: "Scenes", preferredLanguages: preferredLanguages, locale: locale))
+      .init(source: .init(bundle: bundle, tableName: "scenes", preferredLanguages: preferredLanguages, locale: locale))
     }
-    func useCases(preferredLanguages: [String]) -> useCases {
-      .init(source: .init(bundle: bundle, tableName: "UseCases", preferredLanguages: preferredLanguages, locale: locale))
+    func section(preferredLanguages: [String]) -> section {
+      .init(source: .init(bundle: bundle, tableName: "section", preferredLanguages: preferredLanguages, locale: locale))
     }
 
 
-    /// This `_R.string.baseStrings` struct is generated, and contains static references to 6 localization keys.
-    struct baseStrings {
+    /// This `_R.string.base` struct is generated, and contains static references to 5 localization keys.
+    struct base {
       let source: RswiftResources.StringResource.Source
 
-      /// Value: Внимание
+      /// en translation: Раняя игра <b><font color='#ffb240'>~12</font></b>мин
       ///
-      /// Key: attention
-      var attention: RswiftResources.StringResource { .init(key: "attention", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_game_stage_early
+      ///
+      /// Locales: en
+      var dota_game_stage_early: RswiftResources.StringResource { .init(key: "dota_game_stage_early", tableName: "base", source: source, developmentValue: "Раняя игра <b><font color='#ffb240'>~12</font></b>мин", comment: nil) }
 
-      /// Value: Отмена
+      /// en translation: Поздняя игра <b><font color='#ffb240'>31+</font></b>мин
       ///
-      /// Key: cancel
-      var cancel: RswiftResources.StringResource { .init(key: "cancel", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_game_stage_late
+      ///
+      /// Locales: en
+      var dota_game_stage_late: RswiftResources.StringResource { .init(key: "dota_game_stage_late", tableName: "base", source: source, developmentValue: "Поздняя игра <b><font color='#ffb240'>31+</font></b>мин", comment: nil) }
 
-      /// Value: Продолжить
+      /// en translation: Середина игры <b><font color='#ffb240'>~25</font></b>мин
       ///
-      /// Key: continue
-      var `continue`: RswiftResources.StringResource { .init(key: "continue", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_game_stage_mid
+      ///
+      /// Locales: en
+      var dota_game_stage_mid: RswiftResources.StringResource { .init(key: "dota_game_stage_mid", tableName: "base", source: source, developmentValue: "Середина игры <b><font color='#ffb240'>~25</font></b>мин", comment: nil) }
 
-      /// Value: Ошибка
+      /// en translation: Начало игры <b><font color='#ffb240'>~4</font></b>мин
       ///
-      /// Key: error
-      var error: RswiftResources.StringResource { .init(key: "error", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_game_stage_start
+      ///
+      /// Locales: en
+      var dota_game_stage_start: RswiftResources.StringResource { .init(key: "dota_game_stage_start", tableName: "base", source: source, developmentValue: "Начало игры <b><font color='#ffb240'>~4</font></b>мин", comment: nil) }
 
-      /// Value: Ок
+      /// en translation: Загрузка...
       ///
-      /// Key: ok
-      var ok: RswiftResources.StringResource { .init(key: "ok", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
-
-      /// Value: Хорошо
+      /// Key: loading
       ///
-      /// Key: okay
-      var okay: RswiftResources.StringResource { .init(key: "okay", tableName: "BaseStrings", source: source, developmentValue: nil, comment: nil) }
+      /// Locales: en
+      var loading: RswiftResources.StringResource { .init(key: "loading", tableName: "base", source: source, developmentValue: "Загрузка...", comment: nil) }
     }
 
-    /// This `_R.string.errorEntities` struct is generated, and contains static references to 12 localization keys.
-    struct errorEntities {
+    /// This `_R.string.button` struct is generated, and contains static references to 10 localization keys.
+    struct button {
       let source: RswiftResources.StringResource.Source
 
-      /// Value: Дата уже прошла
+      /// en translation: Continue without login
       ///
-      /// Key: dateAlreadyPast
-      var dateAlreadyPast: RswiftResources.StringResource { .init(key: "dateAlreadyPast", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: doNotSignIn
+      ///
+      /// Locales: en
+      var doNotSignIn: RswiftResources.StringResource { .init(key: "doNotSignIn", tableName: "button", source: source, developmentValue: "Continue without login", comment: nil) }
 
-      /// Value: Дата еще не наступила
+      /// en translation: Промокод
       ///
-      /// Key: dateStillToCome
-      var dateStillToCome: RswiftResources.StringResource { .init(key: "dateStillToCome", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_promocode
+      ///
+      /// Locales: en
+      var dota_promocode: RswiftResources.StringResource { .init(key: "dota_promocode", tableName: "button", source: source, developmentValue: "Промокод", comment: nil) }
 
-      /// Value: Номер совпадает с текущим
+      /// en translation: Подтвердить
       ///
-      /// Key: equalPhoneNumber
-      var equalPhoneNumber: RswiftResources.StringResource { .init(key: "equalPhoneNumber", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_promocode_send_btn
+      ///
+      /// Locales: en
+      var dota_promocode_send_btn: RswiftResources.StringResource { .init(key: "dota_promocode_send_btn", tableName: "button", source: source, developmentValue: "Подтвердить", comment: nil) }
 
-      /// Value: '%@' не может быть пустым
+      /// en translation: Найти промокоды можно в Telegram канале
       ///
-      /// Key: fieldIsEmpty
-      var fieldIsEmpty: RswiftResources.StringResource1<String> { .init(key: "fieldIsEmpty", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_promocode_telegram
+      ///
+      /// Locales: en
+      var dota_promocode_telegram: RswiftResources.StringResource { .init(key: "dota_promocode_telegram", tableName: "button", source: source, developmentValue: "Найти промокоды можно в Telegram канале", comment: nil) }
 
-      /// Value: '%@' должно содержать %@ символов
+      /// en translation: Введите Промокод
       ///
-      /// Key: fieldIsNoEqual
-      var fieldIsNoEqual: RswiftResources.StringResource2<String, String> { .init(key: "fieldIsNoEqual", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_promocode_title
+      ///
+      /// Locales: en
+      var dota_promocode_title: RswiftResources.StringResource { .init(key: "dota_promocode_title", tableName: "button", source: source, developmentValue: "Введите Промокод", comment: nil) }
 
-      /// Value: '%@' не может быть более %@ символов
+      /// en translation: Таланты = ВЫКЛ
       ///
-      /// Key: fieldIsTooLong
-      var fieldIsTooLong: RswiftResources.StringResource2<String, String> { .init(key: "fieldIsTooLong", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: heroes_talents_disabled
+      ///
+      /// Locales: en
+      var heroes_talents_disabled: RswiftResources.StringResource { .init(key: "heroes_talents_disabled", tableName: "button", source: source, developmentValue: "Таланты = ВЫКЛ", comment: nil) }
 
-      /// Value: '%@' не может быть менее %@ символов
+      /// en translation: Таланты = ВКЛ
       ///
-      /// Key: fieldIsTooShort
-      var fieldIsTooShort: RswiftResources.StringResource2<String, String> { .init(key: "fieldIsTooShort", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: heroes_talents_enabled
+      ///
+      /// Locales: en
+      var heroes_talents_enabled: RswiftResources.StringResource { .init(key: "heroes_talents_enabled", tableName: "button", source: source, developmentValue: "Таланты = ВКЛ", comment: nil) }
 
-      /// Value: '%@' может содержать только латинские буквы, цифры, знак подчёркивания, точку и минус
+      /// en translation: Sign in via Steam
       ///
-      /// Key: forbiddenSymbolsForEmailOrUsername
-      var forbiddenSymbolsForEmailOrUsername: RswiftResources.StringResource1<String> { .init(key: "forbiddenSymbolsForEmailOrUsername", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: signInWithSteam
+      ///
+      /// Locales: en
+      var signInWithSteam: RswiftResources.StringResource { .init(key: "signInWithSteam", tableName: "button", source: source, developmentValue: "Sign in via Steam", comment: nil) }
 
-      /// Value: '%@' может содержать только латинские буквы, цифры, знаки препинания
+      /// en translation: Купить подписку
       ///
-      /// Key: forbiddenSymbolsForPassword
-      var forbiddenSymbolsForPassword: RswiftResources.StringResource1<String> { .init(key: "forbiddenSymbolsForPassword", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Key: subscription_buy
+      ///
+      /// Locales: en
+      var subscription_buy: RswiftResources.StringResource { .init(key: "subscription_buy", tableName: "button", source: source, developmentValue: "Купить подписку", comment: nil) }
 
-      /// Value: '%@' может содержать только буквы, пробел, дефис
+      /// en translation: Продлить подписку
       ///
-      /// Key: forbiddenSymbolsForText
-      var forbiddenSymbolsForText: RswiftResources.StringResource1<String> { .init(key: "forbiddenSymbolsForText", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
-
-      /// Value: Неверный формат
+      /// Key: subscription_extend
       ///
-      /// Key: incorrect
-      var incorrect: RswiftResources.StringResource { .init(key: "incorrect", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
-
-      /// Value: Пароли не совпадают
-      ///
-      /// Key: passwordsAreDifferent
-      var passwordsAreDifferent: RswiftResources.StringResource { .init(key: "passwordsAreDifferent", tableName: "ErrorEntities", source: source, developmentValue: nil, comment: nil) }
+      /// Locales: en
+      var subscription_extend: RswiftResources.StringResource { .init(key: "subscription_extend", tableName: "button", source: source, developmentValue: "Продлить подписку", comment: nil) }
     }
 
-    /// This `_R.string.responseHandlers` struct is generated, and contains static references to 1 localization keys.
-    struct responseHandlers {
+    /// This `_R.string.dotaPlus` struct is generated, and contains static references to 15 localization keys.
+    struct dotaPlus {
       let source: RswiftResources.StringResource.Source
 
-      /// Value: 404 не найдено  
+      /// en translation: Ваша подписка активирована, у вас есть доступ ко всем крутым штукам, истекает {0}
       ///
-      /// Key: NotFound
-      var notFound: RswiftResources.StringResource { .init(key: "NotFound", tableName: "ResponseHandlers", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dotaPlusExpireDate
+      ///
+      /// Locales: en
+      var dotaPlusExpireDate: RswiftResources.StringResource { .init(key: "dotaPlusExpireDate", tableName: "dotaPlus", source: source, developmentValue: "Ваша подписка активирована, у вас есть доступ ко всем крутым штукам, истекает {0}", comment: nil) }
+
+      /// en translation: На сайте Dota1x6.com вы получите доступ к разделу <b><font color='#ffb240'>"Сборки"</font></b>  <br><br> Наш искусственный интеллект подобрал <b><font color='#ffb240'>предметы</font></b>  для каждого легендарного таланта, основываясь на матчах <b><font color='#ffb240'>лучших игроков 1x6</font></b>
+      ///
+      /// Key: dota_plus_desc_1
+      ///
+      /// Locales: en
+      var dota_plus_desc_1: RswiftResources.StringResource { .init(key: "dota_plus_desc_1", tableName: "dotaPlus", source: source, developmentValue: "На сайте Dota1x6.com вы получите доступ к разделу <b><font color='#ffb240'>\"Сборки\"</font></b>  <br><br> Наш искусственный интеллект подобрал <b><font color='#ffb240'>предметы</font></b>  для каждого легендарного таланта, основываясь на матчах <b><font color='#ffb240'>лучших игроков 1x6</font></b>", comment: nil) }
+
+      /// en translation: Dota 1x6 plus <b><font color='#ffb240'>снимает ограничение</font></b> на получение осколков за матчи<br><br><b><font color='#ffb240'>Осколки</font></b> можно потратить в магазине на фразы колеса чата, питомцев, а также косметические предметы
+      ///
+      /// Key: dota_plus_desc_2
+      ///
+      /// Locales: en
+      var dota_plus_desc_2: RswiftResources.StringResource { .init(key: "dota_plus_desc_2", tableName: "dotaPlus", source: source, developmentValue: "Dota 1x6 plus <b><font color='#ffb240'>снимает ограничение</font></b> на получение осколков за матчи<br><br><b><font color='#ffb240'>Осколки</font></b> можно потратить в магазине на фразы колеса чата, питомцев, а также косметические предметы", comment: nil) }
+
+      /// en translation: Повышайте <b><font color='#ffb240'>уровень</font></b> своих любимых героев!<br><br>За каждый сыгранный матч вы сможете получать опыт, увеличивающий уровень героя. Повышая уровень, вы получаете новые медали и <b><font color='#ffb240'>фразы геройского колеса чата</font></b>
+      ///
+      /// Key: dota_plus_desc_3
+      ///
+      /// Locales: en
+      var dota_plus_desc_3: RswiftResources.StringResource { .init(key: "dota_plus_desc_3", tableName: "dotaPlus", source: source, developmentValue: "Повышайте <b><font color='#ffb240'>уровень</font></b> своих любимых героев!<br><br>За каждый сыгранный матч вы сможете получать опыт, увеличивающий уровень героя. Повышая уровень, вы получаете новые медали и <b><font color='#ffb240'>фразы геройского колеса чата</font></b>", comment: nil) }
+
+      /// en translation: Подписчики Dota 1x6 Plus могут использовать <b><font color='#ffb240'>"Похвалу"</font></b> без ограничений, а также получают доступ к функции <b><font color='#ffb240'>"Дай Пять!"</font></b>
+      ///
+      /// Key: dota_plus_desc_4
+      ///
+      /// Locales: en
+      var dota_plus_desc_4: RswiftResources.StringResource { .init(key: "dota_plus_desc_4", tableName: "dotaPlus", source: source, developmentValue: "Подписчики Dota 1x6 Plus могут использовать <b><font color='#ffb240'>\"Похвалу\"</font></b> без ограничений, а также получают доступ к функции <b><font color='#ffb240'>\"Дай Пять!\"</font></b>", comment: nil) }
+
+      /// en translation: Получите доступ к <b><font color='#ffb240'>новым героям</font></b> раньше всех!<br><br>Последний добавленный герой всегда доступен только подписчикам <b><font color='#ffb240'>Dota 1x6 plus</font></b>
+      ///
+      /// Key: dota_plus_desc_5
+      ///
+      /// Locales: en
+      var dota_plus_desc_5: RswiftResources.StringResource { .init(key: "dota_plus_desc_5", tableName: "dotaPlus", source: source, developmentValue: "Получите доступ к <b><font color='#ffb240'>новым героям</font></b> раньше всех!<br><br>Последний добавленный герой всегда доступен только подписчикам <b><font color='#ffb240'>Dota 1x6 plus</font></b>", comment: nil) }
+
+      /// en translation: На сайте Dota1x6.com вы получите доступ к разделу <b><font color='#ffb240'>'Статистика'</font></b><br><br>В этом разделе вы сможете изучить процент побед и количество игр всех героев и их <b><font color='#ffb240'>легендарных талантов</font></b>
+      ///
+      /// Key: dota_plus_desc_6
+      ///
+      /// Locales: en
+      var dota_plus_desc_6: RswiftResources.StringResource { .init(key: "dota_plus_desc_6", tableName: "dotaPlus", source: source, developmentValue: "На сайте Dota1x6.com вы получите доступ к разделу <b><font color='#ffb240'>'Статистика'</font></b><br><br>В этом разделе вы сможете изучить процент побед и количество игр всех героев и их <b><font color='#ffb240'>легендарных талантов</font></b>", comment: nil) }
+
+      /// en translation: Раз в 3 дня вы сможете <b><font color='#ffb240'>удвоить рейтинг</font></b> за матч<br><br>Но будьте аккуратны! Поражение также отнимет в 2 раза больше рейтинга
+      ///
+      /// Key: dota_plus_desc_7
+      ///
+      /// Locales: en
+      var dota_plus_desc_7: RswiftResources.StringResource { .init(key: "dota_plus_desc_7", tableName: "dotaPlus", source: source, developmentValue: "Раз в 3 дня вы сможете <b><font color='#ffb240'>удвоить рейтинг</font></b> за матч<br><br>Но будьте аккуратны! Поражение также отнимет в 2 раза больше рейтинга", comment: nil) }
+
+      /// en translation: Участвуйте в <b><font color='#ffb240'>голосованиях</font></b> за нового героя!<br><br>С каждым выходом нового героя, открывается голосование за следующего героя. В нем, подписчики Dota 1x6 plus смогут каждый день <b><font color='#ffb240'>бесплатно</font></b> голосовать за 1 из 3 героев
+      ///
+      /// Key: dota_plus_desc_8
+      ///
+      /// Locales: en
+      var dota_plus_desc_8: RswiftResources.StringResource { .init(key: "dota_plus_desc_8", tableName: "dotaPlus", source: source, developmentValue: "Участвуйте в <b><font color='#ffb240'>голосованиях</font></b> за нового героя!<br><br>С каждым выходом нового героя, открывается голосование за следующего героя. В нем, подписчики Dota 1x6 plus смогут каждый день <b><font color='#ffb240'>бесплатно</font></b> голосовать за 1 из 3 героев", comment: nil) }
+
+      /// en translation: Во время игры вы сможете смотреть статистику всего <b><font color='#ffb240'>полученного и нанесенного урона</font></b><br><br>Так будет легче понять какой герой для вас самый опасный и какая способность у вас наиболее полезна
+      ///
+      /// Key: dota_plus_desc_9
+      ///
+      /// Locales: en
+      var dota_plus_desc_9: RswiftResources.StringResource { .init(key: "dota_plus_desc_9", tableName: "dotaPlus", source: source, developmentValue: "Во время игры вы сможете смотреть статистику всего <b><font color='#ffb240'>полученного и нанесенного урона</font></b><br><br>Так будет легче понять какой герой для вас самый опасный и какая способность у вас наиболее полезна", comment: nil) }
+
+      /// en translation: Что дает подписка?
+      ///
+      /// Key: dota_plus_what_gives
+      ///
+      /// Locales: en
+      var dota_plus_what_gives: RswiftResources.StringResource { .init(key: "dota_plus_what_gives", tableName: "dotaPlus", source: source, developmentValue: "Что дает подписка?", comment: nil) }
+
+      /// en translation: Доступно только подписчикам Dota 1x6 Plus
+      ///
+      /// Key: item_builds_not_available
+      ///
+      /// Locales: en
+      var item_builds_not_available: RswiftResources.StringResource { .init(key: "item_builds_not_available", tableName: "dotaPlus", source: source, developmentValue: "Доступно только подписчикам Dota 1x6 Plus", comment: nil) }
+
+      /// en translation: Ваша подписка истекла, чтобы получить доступ к крутым штукам, купите еще одну подписку
+      ///
+      /// Key: subscriptionStatusExpired
+      ///
+      /// Locales: en
+      var subscriptionStatusExpired: RswiftResources.StringResource { .init(key: "subscriptionStatusExpired", tableName: "dotaPlus", source: source, developmentValue: "Ваша подписка истекла, чтобы получить доступ к крутым штукам, купите еще одну подписку", comment: nil) }
+
+      /// en translation: Купив подписку вы сможеет получить супер крутые штуки
+      ///
+      /// Key: subscriptionStatusNothing
+      ///
+      /// Locales: en
+      var subscriptionStatusNothing: RswiftResources.StringResource { .init(key: "subscriptionStatusNothing", tableName: "dotaPlus", source: source, developmentValue: "Купив подписку вы сможеет получить супер крутые штуки", comment: nil) }
+
+      /// en translation: Статистика героев и их легендарных талантов доступна только подписчикам Dota 1x6 Plus
+      ///
+      /// Key: talens_stats_not_available
+      ///
+      /// Locales: en
+      var talens_stats_not_available: RswiftResources.StringResource { .init(key: "talens_stats_not_available", tableName: "dotaPlus", source: source, developmentValue: "Статистика героев и их легендарных талантов доступна только подписчикам Dota 1x6 Plus", comment: nil) }
     }
 
     /// This `_R.string.scenes` struct is generated, and contains static references to 4 localization keys.
     struct scenes {
       let source: RswiftResources.StringResource.Source
 
-      /// Value: Продолжить
+      /// en translation: Dota 1x6 Plus
       ///
-      /// Key: continue
-      var `continue`: RswiftResources.StringResource { .init(key: "continue", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_plus
+      ///
+      /// Locales: en
+      var dota_plus: RswiftResources.StringResource { .init(key: "dota_plus", tableName: "scenes", source: source, developmentValue: "Dota 1x6 Plus", comment: nil) }
 
-      /// Value: Ошибка
+      /// en translation: Dota 1x6 Plus
       ///
-      /// Key: error
-      var error: RswiftResources.StringResource { .init(key: "error", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_plus_title
+      ///
+      /// Locales: en
+      var dota_plus_title: RswiftResources.StringResource { .init(key: "dota_plus_title", tableName: "scenes", source: source, developmentValue: "Dota 1x6 Plus", comment: nil) }
 
-      /// Value: Профиль
+      /// en translation: Игровой помощник
       ///
-      /// Key: profile
-      var profile: RswiftResources.StringResource { .init(key: "profile", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+      /// Key: dota_plus_title_mini
+      ///
+      /// Locales: en
+      var dota_plus_title_mini: RswiftResources.StringResource { .init(key: "dota_plus_title_mini", tableName: "scenes", source: source, developmentValue: "Игровой помощник", comment: nil) }
 
-      /// Value: Настройки
+      /// en translation: Введите промокод
       ///
-      /// Key: settings
-      var settings: RswiftResources.StringResource { .init(key: "settings", tableName: "Scenes", source: source, developmentValue: nil, comment: nil) }
+      /// Key: enter_promocode
+      ///
+      /// Locales: en
+      var enter_promocode: RswiftResources.StringResource { .init(key: "enter_promocode", tableName: "scenes", source: source, developmentValue: "Введите промокод", comment: nil) }
     }
 
-    /// This `_R.string.useCases` struct is generated, and contains static references to 1 localization keys.
-    struct useCases {
+    /// This `_R.string.section` struct is generated, and contains static references to 8 localization keys.
+    struct section {
       let source: RswiftResources.StringResource.Source
 
-      /// Value: Перейти в настройки чтобы изменить разрешения для  %@
+      /// en translation: Dota 1x6 plus
       ///
-      /// Key: ProceedToSettingsToChangePermissionFor
-      var proceedToSettingsToChangePermissionFor: RswiftResources.StringResource1<String> { .init(key: "ProceedToSettingsToChangePermissionFor", tableName: "UseCases", source: source, developmentValue: nil, comment: nil) }
+      /// Key: nav_dota_plus
+      ///
+      /// Locales: en
+      var nav_dota_plus: RswiftResources.StringResource { .init(key: "nav_dota_plus", tableName: "section", source: source, developmentValue: "Dota 1x6 plus", comment: nil) }
+
+      /// en translation: Герои и Сборки
+      ///
+      /// Key: nav_heroes
+      ///
+      /// Locales: en
+      var nav_heroes: RswiftResources.StringResource { .init(key: "nav_heroes", tableName: "section", source: source, developmentValue: "Герои и Сборки", comment: nil) }
+
+      /// en translation: Инвентарь
+      ///
+      /// Key: nav_inventory
+      ///
+      /// Locales: en
+      var nav_inventory: RswiftResources.StringResource { .init(key: "nav_inventory", tableName: "section", source: source, developmentValue: "Инвентарь", comment: nil) }
+
+      /// en translation: Таблица лидеров
+      ///
+      /// Key: nav_leaderboard
+      ///
+      /// Locales: en
+      var nav_leaderboard: RswiftResources.StringResource { .init(key: "nav_leaderboard", tableName: "section", source: source, developmentValue: "Таблица лидеров", comment: nil) }
+
+      /// en translation: Мета
+      ///
+      /// Key: nav_stats
+      ///
+      /// Locales: en
+      var nav_stats: RswiftResources.StringResource { .init(key: "nav_stats", tableName: "section", source: source, developmentValue: "Мета", comment: nil) }
+
+      /// en translation: Магазин
+      ///
+      /// Key: nav_store
+      ///
+      /// Locales: en
+      var nav_store: RswiftResources.StringResource { .init(key: "nav_store", tableName: "section", source: source, developmentValue: "Магазин", comment: nil) }
+
+      /// en translation: Обновления
+      ///
+      /// Key: nav_updates
+      ///
+      /// Locales: en
+      var nav_updates: RswiftResources.StringResource { .init(key: "nav_updates", tableName: "section", source: source, developmentValue: "Обновления", comment: nil) }
+
+      /// en translation: Голосование
+      ///
+      /// Key: nav_voting
+      ///
+      /// Locales: en
+      var nav_voting: RswiftResources.StringResource { .init(key: "nav_voting", tableName: "section", source: source, developmentValue: "Голосование", comment: nil) }
     }
   }
 
-  /// This `_R.color` struct is generated, and contains static references to 3 colors.
+  /// This `_R.color` struct is generated, and contains static references to 9 colors.
   struct color {
     let bundle: Foundation.Bundle
 
@@ -235,14 +409,35 @@ struct _R {
 
     /// Color `AppWhite`.
     var appWhite: RswiftResources.ColorResource { .init(name: "AppWhite", path: [], bundle: bundle) }
+
+    /// Color `blue`.
+    var blue: RswiftResources.ColorResource { .init(name: "blue", path: [], bundle: bundle) }
+
+    /// Color `lightBlue`.
+    var lightBlue: RswiftResources.ColorResource { .init(name: "lightBlue", path: [], bundle: bundle) }
+
+    /// Color `lightPurple`.
+    var lightPurple: RswiftResources.ColorResource { .init(name: "lightPurple", path: [], bundle: bundle) }
+
+    /// Color `orange`.
+    var orange: RswiftResources.ColorResource { .init(name: "orange", path: [], bundle: bundle) }
+
+    /// Color `purple`.
+    var purple: RswiftResources.ColorResource { .init(name: "purple", path: [], bundle: bundle) }
+
+    /// Color `yellow`.
+    var yellow: RswiftResources.ColorResource { .init(name: "yellow", path: [], bundle: bundle) }
   }
 
-  /// This `_R.image` struct is generated, and contains static references to 5 images.
+  /// This `_R.image` struct is generated, and contains static references to 6 images.
   struct image {
     let bundle: Foundation.Bundle
 
     /// Image `avatarPlaceholder`.
     var avatarPlaceholder: RswiftResources.ImageResource { .init(name: "avatarPlaceholder", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `backgroundImage`.
+    var backgroundImage: RswiftResources.ImageResource { .init(name: "backgroundImage", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
     /// Image `chevronLeftIcon`.
     var chevronLeftIcon: RswiftResources.ImageResource { .init(name: "chevronLeftIcon", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }

@@ -1,0 +1,5 @@
+"loading" = "Загрузка...";
+"dota_game_stage_start" = "Начало игры <b><font color='#ffb240'>~4</font></b>мин";
+"dota_game_stage_early" = "Раняя игра <b><font color='#ffb240'>~12</font></b>мин";
+"dota_game_stage_mid" = "Середина игры <b><font color='#ffb240'>~25</font></b>мин";
+"dota_game_stage_late" = "Поздняя игра <b><font color='#ffb240'>31+</font></b>мин";

@@ -37,7 +37,6 @@ open class ErrorResponseHandler: ResponseHandler {
                 // When performing a resumable upload, handle 404 Not Found errors
                 //  by starting the entire upload over from the beginning.
                                 
-                errorEntity.errors.append(R.string.responseHandlers.notFound())
                 observer(.error(errorEntity))
                 return true
 

@@ -18,7 +18,7 @@ class DI {
         
         DI.container = DIContainer(parent: backgroundContainer)
         
-        ApiEndpoint.baseEndpoint = ApiEndpoint.webAntDevApi
+        ApiEndpoint.baseEndpoint = ApiEndpoint.devApi
         
         self.container.register(AuthInterceptor.init)
             .as(AuthInterceptor.self)
@@ -47,17 +47,6 @@ class DI {
             $0.interceptors.insert($1 as AuthInterceptor, at: 0)
         }
         .lifetime(.single)
-        
-        // MARK: - Gateways
-        
-//        self.container.register(ApiAuthenticationGateway.init)
-//            .as(AuthenticationGateway.self)
-//            .lifetime(.single)
-        
-        // MARK: - UseCases
-        
-//        self.container.register(AuthUseCaseImp.init)
-//            .as(AuthUseCase.self)
     }
     // swiftlint:enable all
 

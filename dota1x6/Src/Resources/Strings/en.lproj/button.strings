@@ -1,0 +1,10 @@
+"heroes_talents_enabled" = "Таланты = ВКЛ";
+"heroes_talents_disabled" = "Таланты = ВЫКЛ";
+"subscription_extend" = "Продлить подписку";
+"subscription_buy" = "Купить подписку";
+"dota_promocode" = "Промокод";
+"dota_promocode_send_btn" = "Подтвердить";
+"dota_promocode_title" = "Введите Промокод";
+"dota_promocode_telegram" = "Найти промокоды можно в Telegram канале";
+"signInWithSteam" = "Sign in via Steam";
+"doNotSignIn" = "Continue without login";

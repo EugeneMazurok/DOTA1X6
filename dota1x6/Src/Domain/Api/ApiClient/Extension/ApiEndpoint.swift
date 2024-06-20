@@ -3,9 +3,9 @@ import RxNetworkApiClient
 
 extension ApiEndpoint {
 
-    private(set) static var webAntDevApi = ApiEndpoint(Config.apiEndpoint)
+    private(set) static var devApi = ApiEndpoint(Config.apiEndpoint)
     
     static func updateEndpoint() {
-        ApiEndpoint.webAntDevApi = ApiEndpoint(Config.apiEndpoint)
+        ApiEndpoint.devApi = ApiEndpoint(Config.apiEndpoint)
     }
 }
