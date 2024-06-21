@@ -19,7 +19,6 @@ class LeaderboardCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        // Настройка лейблов
         column1Label.translatesAutoresizingMaskIntoConstraints = false
         column2Label.translatesAutoresizingMaskIntoConstraints = false
         column3Label.translatesAutoresizingMaskIntoConstraints = false

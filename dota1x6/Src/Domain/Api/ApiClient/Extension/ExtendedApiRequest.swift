@@ -17,7 +17,7 @@ class ExtendedApiRequest<T: Codable>: ApiRequest<T> {
     public static func extendedRequest<T: Codable>(
             path: String? = nil,
             method: HttpMethod,
-            endpoint: ApiEndpoint = ApiEndpoint.baseEndpoint,
+            endpoint: ApiEndpoint,
             headers: [Header]? = nil,
             formData: FormDataFields? = nil,
             files: [UploadFile]? = nil,
@@ -39,7 +39,7 @@ class ExtendedApiRequest<T: Codable>: ApiRequest<T> {
     public static func extendedRequest<T: Codable>(
             path: String? = nil,
             method: HttpMethod,
-            endpoint: ApiEndpoint = ApiEndpoint.baseEndpoint,
+            endpoint: ApiEndpoint,
             headers: [Header]? = nil,
             formData: FormDataFields? = nil,
             files: [UploadFile]? = nil,

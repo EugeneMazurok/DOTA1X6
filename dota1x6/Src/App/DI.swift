@@ -18,12 +18,6 @@ class DI {
         
         DI.container = DIContainer(parent: backgroundContainer)
         
-        ApiEndpoint.baseEndpoint = ApiEndpoint.devApi
-        
-        self.container.register(AuthInterceptor.init)
-            .as(AuthInterceptor.self)
-            .lifetime(.single)
-        
         self.container.register { () -> ApiClientImp in
             
             let config = URLSessionConfiguration.default
@@ -37,15 +31,10 @@ class DI {
             client.responseHandlersQueue.append(ErrorResponseHandler())
             client.responseHandlersQueue.append(JsonResponseHandler())
             client.responseHandlersQueue.append(NSErrorResponseHandler())
-            
-            client.interceptors.append(JsonContentInterceptor())
-            client.interceptors.append(ExtraPathInterceptor())
+          
             return client
         }
         .as(ApiClient.self)
-        .injection(cycle: true) {
-            $0.interceptors.insert($1 as AuthInterceptor, at: 0)
-        }
         .lifetime(.single)
     }
     // swiftlint:enable all

@@ -1,4 +1,3 @@
-//
 //  SignInPresenterImp.swift
 //  dota1x6
 //
@@ -10,7 +9,7 @@ import UIKit
 import WebKit
 import RxSwift
 
-// swiftlint: disable cyrillic_strings implicitly_unwrapped_optional pattern_matching
+// swiftlint: disable all
 
 class SignInPresenterImp: NSObject, SignInPresenter {
     
@@ -20,6 +19,8 @@ class SignInPresenterImp: NSObject, SignInPresenter {
     private var webViewController: UIViewController?
     private let steamGateway = SteamGateway()
     private let signInGateway = SignInGateway()
+    let group = DispatchGroup()
+    let disposeBag = DisposeBag()
     
     init(view: SignInViewController, router: SignInRouterImp) {
         self.view = view
@@ -27,14 +28,10 @@ class SignInPresenterImp: NSObject, SignInPresenter {
     }
     
     func signIn() {
-        signInGateway.initiateSignIn { [weak self] result in
-            switch result {
-            case .success(let url):
-                self?.presentWebView(with: url)
-                
-            case .failure(let error):
-                print("Ошибка: \(error.localizedDescription)")
-            }
+        if let url = URL(string: "".generateOpedID() ?? "") {
+            presentWebView(with: url)
+        } else {
+            print("Ошибка: URL не валиден")
         }
     }
     
@@ -49,12 +46,12 @@ class SignInPresenterImp: NSObject, SignInPresenter {
         
         let webViewController = UIViewController()
         webViewController.view = webView
+        self.webViewController = webViewController
         
         view?.present(webViewController, animated: true, completion: {
             webView.load(URLRequest(url: url))
+            print("Загрузка URL: \(url.absoluteString)")
         })
-        
-        self.webViewController = webViewController
     }
 }
 
@@ -78,47 +75,84 @@ extension SignInPresenterImp: WKNavigationDelegate {
         
         if let url = response.url, url.absoluteString.hasPrefix("https://www.dota1x6.com") {
             webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { [weak self] cookies in
-                for cookie in cookies {
-                    
-                    if cookie.name == "steamLoginSecure" {
-                        if let steamID = self?.extractSteamID(from: cookie.value) {
-                            self?.steamGateway.fetchSteamUserProfile(steamID: steamID) { result in
-                                switch result {
-                                case .success(let profile):
-                                    print("Профиль пользователя: \(profile)")
-                                    
-                                case .failure(let error):
-                                    print("Ошибка получения профиля пользователя: \(error.localizedDescription)")
-                                }
-                            }
-                        } else {
-                            print("Ошибка: не удалось извлечь SteamID из cookie")
-                        }
-                    }
-                    
-                    if cookie.name == "token" {
-                        UserDefaults.standard.set(cookie.value, forKey: "authToken")
-                    }
-                }
+                self?.handleCookies(cookies, decisionHandler: decisionHandler)
             }
-            
-            DispatchQueue.main.async {
-                self.webViewController?.dismiss(animated: true, completion: nil)
-                DispatchQueue.main.async {
-                    self.router.goToHome()
-                }
-            }
+        } else {
+            decisionHandler(.allow)
         }
-        
-        decisionHandler(.allow)
     }
     
-    private func extractSteamID(from value: String) -> String? {
-        if let range = value.range(of: "%7C%7C") {
-            let steamID = value[..<range.lowerBound]
-            return String(steamID)
+    private func handleCookies(_ cookies: [HTTPCookie], decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        let (authToken, steamID) = extractCookies(cookies)
+        
+        guard let authToken = authToken else {
+            print("Ошибка: отсутствует токен")
+            decisionHandler(.cancel)
+            return
         }
-        return nil
+        
+        UserDefaults.standard.set(authToken, forKey: "authToken")
+        
+        guard let steamID = steamID else {
+            print("Ошибка: не удалось извлечь SteamID из cookie")
+            decisionHandler(.cancel)
+            return
+        }
+        
+        performNetworkRequests(authToken: authToken, steamID: steamID, decisionHandler: decisionHandler)
+    }
+    
+    private func extractCookies(_ cookies: [HTTPCookie]) -> (authToken: String?, steamID: String?) {
+        var authToken: String?
+        var steamID: String?
+        
+        for cookie in cookies {
+            if cookie.name == "token" {
+                authToken = cookie.value
+            }
+            if cookie.name == "steamLoginSecure", let id = cookie.value.extractSteamID() {
+                steamID = id
+            }
+        }
+        return (authToken, steamID)
+    }
+    
+    private func performNetworkRequests(authToken: String, steamID: String, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        let group = DispatchGroup()
+        
+        group.enter()
+        signInGateway.isAuth()
+            .subscribe(
+                onSuccess: { result in
+                    print("isAuth Result: \(result)")
+                    group.leave()
+                },
+                onError: { error in
+                    print("Ошибка при выполнении isAuth: \(error.localizedDescription)")
+                    group.leave()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        group.enter()
+        steamGateway.getSteamUser(steamID: steamID)
+            .subscribe(
+                onSuccess: { result in
+                    print("steamUser Result: \(result)")
+                    group.leave()
+                },
+                onError: { error in
+                    print("Ошибка при выполнении getSteamUser: \(error.localizedDescription)")
+                    group.leave()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        group.notify(queue: .main) {
+            self.webViewController?.dismiss(animated: true, completion: nil)
+            self.router.goToHome()
+            decisionHandler(.allow)
+        }
     }
 }
-// swiftlint: enable cyrillic_strings implicitly_unwrapped_optional pattern_matching
+// swiftlint: enable all
