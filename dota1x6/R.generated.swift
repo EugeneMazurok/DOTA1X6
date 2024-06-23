@@ -429,7 +429,7 @@ struct _R {
     var yellow: RswiftResources.ColorResource { .init(name: "yellow", path: [], bundle: bundle) }
   }
 
-  /// This `_R.image` struct is generated, and contains static references to 6 images.
+  /// This `_R.image` struct is generated, and contains static references to 7 images.
   struct image {
     let bundle: Foundation.Bundle
 
@@ -450,6 +450,9 @@ struct _R {
 
     /// Image `eyeOnIcon`.
     var eyeOnIcon: RswiftResources.ImageResource { .init(name: "eyeOnIcon", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `shards`.
+    var shards: RswiftResources.ImageResource { .init(name: "shards", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
   }
 
   /// This `_R.info` struct is generated, and contains static references to 1 properties.

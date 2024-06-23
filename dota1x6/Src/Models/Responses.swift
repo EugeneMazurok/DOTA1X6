@@ -49,3 +49,9 @@ struct UserAuthResponse: Codable {
     let isSubscribed: Bool?
     let shardsAmount: Int?
 }
+
+struct CombinedUserData: Codable {
+    
+    let userAuth: UserAuthResponse
+    let steamUser: SteamPlayer
+}

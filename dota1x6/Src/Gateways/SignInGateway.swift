@@ -10,21 +10,15 @@ import WebKit
 import RxNetworkApiClient
 import RxSwift
 
+// swiftlint: disable all
+
 class SignInGateway: BaseGateway {
     
-    var token: String?
-    
-    override init() {
-        super.init()
-        
-        if let authToken = UserDefaults.standard.object(forKey: "authToken") as? String {
-            token = authToken
-        }
-    }
-    
-    func isAuth() -> Single<UserAuthResponse> {
-        
-        let request = ExtendedApiRequest<UserAuthResponse>.getUserAuth(token: self.token ?? "ez")
+    func isAuth(authToken: String) -> Single<UserAuthResponse> {
+        // Выполняем запрос с заголовком Cookie, содержащим токен
+        let request = ExtendedApiRequest<UserAuthResponse>.getUserAuth(token: authToken)
         return apiClient.execute(request: request)
     }
 }
+
+// swiftlint: enable all

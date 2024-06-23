@@ -1,9 +1,3 @@
-//  SignInPresenterImp.swift
-//  dota1x6
-//
-//  Created by Евгений Мазурок on 17.06.2024.
-//
-
 import Foundation
 import UIKit
 import WebKit
@@ -19,7 +13,6 @@ class SignInPresenterImp: NSObject, SignInPresenter {
     private var webViewController: UIViewController?
     private let steamGateway = SteamGateway()
     private let signInGateway = SignInGateway()
-    let group = DispatchGroup()
     let disposeBag = DisposeBag()
     
     init(view: SignInViewController, router: SignInRouterImp) {
@@ -56,15 +49,6 @@ class SignInPresenterImp: NSObject, SignInPresenter {
 }
 
 extension SignInPresenterImp: WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("Страница Steam загружена успешно")
-    }
-    
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("Ошибка загрузки страницы Steam: \(error.localizedDescription)")
-    }
-    
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
@@ -91,8 +75,6 @@ extension SignInPresenterImp: WKNavigationDelegate {
             return
         }
         
-        UserDefaults.standard.set(authToken, forKey: "authToken")
-        
         guard let steamID = steamID else {
             print("Ошибка: не удалось извлечь SteamID из cookie")
             decisionHandler(.cancel)
@@ -100,6 +82,65 @@ extension SignInPresenterImp: WKNavigationDelegate {
         }
         
         performNetworkRequests(authToken: authToken, steamID: steamID, decisionHandler: decisionHandler)
+    }
+
+    private func performNetworkRequests(authToken: String, steamID: String, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        var steamPlayer: SteamPlayer?
+
+        steamGateway.getSteamUser(steamID: steamID)
+            .flatMap { [weak self] steamResponse -> Single<UserAuthResponse> in
+                guard let self = self else { return .error(NSError(domain: "SignInPresenterImp", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ошибка: ссылка на self утеряна"])) }
+                
+                guard let firstPlayer = steamResponse.response?.players?.first else {
+                    return .error(NSError(domain: "SignInPresenterImp", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ошибка: не удалось получить данные пользователя Steam"]))
+                }
+                
+                steamPlayer = firstPlayer
+
+                return self.signInGateway.isAuth(authToken: authToken)
+            }
+            .observeOn(MainScheduler.instance) // Ensure following code runs on main thread
+            .subscribe(
+                onSuccess: { [weak self] userAuthResponse in
+                    guard let self = self else { return }
+                    print("isAuth Result: \(userAuthResponse)")
+                    
+                    guard let steamPlayer = steamPlayer else {
+                        print("Ошибка: данные SteamPlayer не найдены")
+                        decisionHandler(.cancel)
+                        return
+                    }
+
+                    let combinedUserData = CombinedUserData(userAuth: userAuthResponse, steamUser: steamPlayer)
+                    self.saveCombinedUserData(combinedUserData)
+
+                    // Check if webViewController exists and is presented
+                    if let webViewController = self.webViewController, webViewController.isViewLoaded && (webViewController.view.window != nil) {
+                        webViewController.dismiss(animated: true, completion: {
+                            self.router.goToHome()
+                            decisionHandler(.allow)
+                        })
+                    } else {
+                        // If webViewController is already dismissed or not presented, continue
+                        self.router.goToHome()
+                        decisionHandler(.allow)
+                    }
+                },
+                onError: { [weak self] error in
+                    print("Ошибка при выполнении isAuth: \(error.localizedDescription)")
+                    decisionHandler(.cancel)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func saveCombinedUserData(_ combinedUserData: CombinedUserData) {
+        do {
+            let encodedData = try JSONEncoder().encode(combinedUserData)
+            UserDefaults.standard.set(encodedData, forKey: "combinedUserData")
+        } catch {
+            print("Ошибка при кодировании CombinedUserData: \(error.localizedDescription)")
+        }
     }
     
     private func extractCookies(_ cookies: [HTTPCookie]) -> (authToken: String?, steamID: String?) {
@@ -116,43 +157,6 @@ extension SignInPresenterImp: WKNavigationDelegate {
         }
         return (authToken, steamID)
     }
-    
-    private func performNetworkRequests(authToken: String, steamID: String, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        let group = DispatchGroup()
-        
-        group.enter()
-        signInGateway.isAuth()
-            .subscribe(
-                onSuccess: { result in
-                    print("isAuth Result: \(result)")
-                    group.leave()
-                },
-                onError: { error in
-                    print("Ошибка при выполнении isAuth: \(error.localizedDescription)")
-                    group.leave()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        group.enter()
-        steamGateway.getSteamUser(steamID: steamID)
-            .subscribe(
-                onSuccess: { result in
-                    print("steamUser Result: \(result)")
-                    group.leave()
-                },
-                onError: { error in
-                    print("Ошибка при выполнении getSteamUser: \(error.localizedDescription)")
-                    group.leave()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        group.notify(queue: .main) {
-            self.webViewController?.dismiss(animated: true, completion: nil)
-            self.router.goToHome()
-            decisionHandler(.allow)
-        }
-    }
 }
+
 // swiftlint: enable all
